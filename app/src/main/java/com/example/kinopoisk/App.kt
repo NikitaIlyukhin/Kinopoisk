@@ -10,7 +10,7 @@ class App:Application() {
         lateinit var ctx: Context
         lateinit var dataBase: DataBase
         val KINO_TOKEN = "ZQQ8GMN-TN54SGK-NB3MKEC-ZKB8V06"
-        val KINO_BASE_URL = "https://api.kinopoisk.dev/movie"
+        val KINO_BASE_URL = "https://api.kinopoisk.dev/"
     }
 
     override fun onCreate() {
