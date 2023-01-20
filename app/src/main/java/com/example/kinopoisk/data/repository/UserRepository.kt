@@ -10,29 +10,25 @@ import com.example.kinopoisk.data.room.DataBase
 import kotlinx.coroutines.*
 import retrofit2.Response
 
-class UserRepository {
-    companion object {
-        val dB: DataBase = App.dataBase
-        private var user: LiveData<User>? = MutableLiveData<User>()
+class UserRepository : UserRepositoryImpl {
+    val dB: DataBase = App.dataBase
+    private var user: LiveData<User>? = MutableLiveData<User>()
 
-        fun createUser(newUser: User) {
+    override fun createUser(newUser: User) {
 //            user.value = User("1","1",false)
-            CoroutineScope(Dispatchers.Default).launch {
-                dB.getDaoUser().insertUser(newUser)
-            }
+        CoroutineScope(Dispatchers.Default).launch {
+            dB.getDaoUser().insertUser(newUser)
         }
-        fun getUserByPhone(phone: String): LiveData<User> {
-            user = dB.getDaoUser().getUserByPhone(phone)
-            return user as LiveData<User>
-        }
-        fun forgotActiveUser(){
-            CoroutineScope(Dispatchers.Default).launch {
-                dB.getDaoUser().forgotActiveUser()
-            }
-        }
+    }
 
-        suspend fun getFilms():Response<FilmModel>{
-            return AppModule.api.getMovies(App.KINO_TOKEN)
+    override fun getUserByPhone(phone: String): LiveData<User> {
+        user = dB.getDaoUser().getUserByPhone(phone)
+        return user as LiveData<User>
+    }
+
+    override fun forgotActiveUser() {
+        CoroutineScope(Dispatchers.Default).launch {
+            dB.getDaoUser().forgotActiveUser()
         }
     }
 }

@@ -7,15 +7,16 @@ import androidx.fragment.app.activityViewModels
 import com.example.kinopoisk.R
 import com.example.kinopoisk.viewModel.UserViewModel
 
-class StartFragment:Fragment(R.layout.start_fragment) {
+class StartFragment : Fragment(R.layout.start_fragment) {
     private val userViewModel by activityViewModels<UserViewModel>()
 
-    companion object{
+    companion object {
         @JvmStatic
         fun newInstance() = StartFragment()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userViewModel.goToNextFragmentWithLoad(this,LoginFragment.newInstance(),3)
+        userViewModel.goToNextFragmentWithLoad(this, LoginFragment.newInstance(), 3)
     }
 }

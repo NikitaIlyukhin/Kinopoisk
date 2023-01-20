@@ -7,14 +7,18 @@ import com.example.kinopoisk.view.LoginFragment
 import com.example.kinopoisk.view.StartFragment
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var transaction:FragmentTransaction
+    private lateinit var transaction: FragmentTransaction
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
             transaction = supportFragmentManager.beginTransaction()
-            transaction.add(R.id.fragment_container_view,StartFragment.newInstance(),"startFragment").commit()
+            transaction.add(
+                R.id.fragment_container_view,
+                StartFragment.newInstance(),
+                "startFragment"
+            ).commit()
         }
     }
 }

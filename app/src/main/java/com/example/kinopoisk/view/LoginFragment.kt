@@ -13,12 +13,12 @@ import com.example.kinopoisk.R
 import com.example.kinopoisk.databinding.LoginFragmentBinding
 import com.example.kinopoisk.viewModel.UserViewModel
 
-class LoginFragment:Fragment(R.layout.login_fragment) {
-    private lateinit var binding : LoginFragmentBinding
+class LoginFragment : Fragment(R.layout.login_fragment) {
+    private lateinit var binding: LoginFragmentBinding
     private val userViewModel by activityViewModels<UserViewModel>()
-    private lateinit var phone:String
-    private lateinit var password:String
-    private var remember:Boolean = false
+    private lateinit var phone: String
+    private lateinit var password: String
+    private var remember: Boolean = false
 
     companion object {
         @JvmStatic
@@ -40,28 +40,28 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
         binding.editTextPhone.addTextChangedListener {
             println("AAA")
             binding.passwordLayout.error = null
-            binding.phoneLayout.error=null
+            binding.phoneLayout.error = null
         }
         binding.editTextPassword.addTextChangedListener { binding.passwordLayout.error = null }
 
         //Registration-->
         binding.registrationBtn.setOnClickListener {
-            phone= binding.editTextPhone.text.toString()
+            phone = binding.editTextPhone.text.toString()
             password = binding.editTextPassword.text.toString()
             remember = binding.rememberSw.isChecked
 
-            if(!remember) userViewModel.forgotActiveUser()
-            if(phone != ""){
+            if (!remember) userViewModel.forgotActiveUser()
+            if (phone != "") {
                 println(phone)
-                userViewModel.getUserByPhone(phone)!!.observe((activity as MainActivity?)!!, Observer {
-                    println(phone)
-                    if(it==null){
-                        userViewModel.createUser(phone,password,remember)
-                    }
-                    else {
-                        binding.phoneLayout.error = getString(R.string.error_registration)
-                    }
-                })
+                userViewModel.getUserByPhone(phone)!!
+                    .observe((activity as MainActivity?)!!, Observer {
+                        println(phone)
+                        if (it == null) {
+                            userViewModel.createUser(phone, password, remember)
+                        } else {
+                            binding.phoneLayout.error = getString(R.string.error_registration)
+                        }
+                    })
             }
         }
         //Login -->
@@ -71,10 +71,10 @@ class LoginFragment:Fragment(R.layout.login_fragment) {
             remember = binding.rememberSw.isChecked
 
             userViewModel.getUserByPhone(phone)!!.observe((activity as MainActivity?)!!, Observer {
-                if(it==null)
+                if (it == null)
                     binding.phoneLayout.error = getString(R.string.error_login)
                 else {
-                    if(it.password!=password)
+                    if (it.password != password)
                         binding.passwordLayout.error = getString(R.string.error_password)
                     else {
 //                        userViewModel.goToNextFragment(this,FragmentUserCard.newInstance())
