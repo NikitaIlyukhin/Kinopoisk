@@ -12,10 +12,9 @@ import retrofit2.Response
 
 class UserRepository : UserRepositoryImpl {
     val dB: DataBase = App.dataBase
-    private var user: LiveData<User>? = MutableLiveData<User>()
+    private var user: LiveData<User> = MutableLiveData<User>()
 
     override fun createUser(newUser: User) {
-//            user.value = User("1","1",false)
         CoroutineScope(Dispatchers.Default).launch {
             dB.getDaoUser().insertUser(newUser)
         }
@@ -30,5 +29,10 @@ class UserRepository : UserRepositoryImpl {
         CoroutineScope(Dispatchers.Default).launch {
             dB.getDaoUser().forgotActiveUser()
         }
+    }
+
+    override fun getActiveUser(): LiveData<User> {
+        user = dB.getDaoUser().getActiveUser()
+        return user as LiveData<User>
     }
 }

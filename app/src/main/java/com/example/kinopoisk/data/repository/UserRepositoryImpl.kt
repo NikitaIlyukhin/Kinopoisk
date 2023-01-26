@@ -7,4 +7,6 @@ interface UserRepositoryImpl {
     fun createUser(newUser: User)
     fun getUserByPhone(phone: String): LiveData<User>
     fun forgotActiveUser()
+    fun getActiveUser(): LiveData<User>
+    fun setActiveUser(user: User)
 }

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import com.example.kinopoisk.MainActivity
 import com.example.kinopoisk.R
 import com.example.kinopoisk.viewModel.UserViewModel
 
@@ -17,6 +19,13 @@ class StartFragment : Fragment(R.layout.start_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userViewModel.goToNextFragmentWithLoad(this, LoginFragment.newInstance(), 3)
+        userViewModel.getActiveUser().observe(activity as MainActivity, Observer {
+            if (it != null){
+                userViewModel.goToNextFragmentWithLoad(this, LoginFragment.newInstance(), 3)
+            }
+            else {
+                userViewModel.goToNextFragmentWithLoad(this, LoginFragment.newInstance(), 3)
+            }
+        })
     }
 }

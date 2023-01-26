@@ -2,6 +2,7 @@ package com.example.kinopoisk.viewModel
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.kinopoisk.R
 import com.example.kinopoisk.data.model.entity.User
@@ -12,14 +13,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class UserViewModel(private val repository: UserRepositoryImpl) : ViewModel() {
+class UserViewModel(private val repository: UserRepositoryImpl = UserRepository()) : ViewModel() {
+    var user:LiveData<User> = MutableLiveData<User>()
 
     fun createUser(phone: String, password: String, activeFlg: Boolean) {
         repository.createUser(User(phone, password, activeFlg))
     }
 
     fun getUserByPhone(phone: String): LiveData<User> {
-        return repository.getUserByPhone(phone)
+        user = repository.getUserByPhone(phone)
+        return user
     }
 
     fun goToNextFragment(fragment: Fragment, nextFragment: Fragment) {
@@ -45,5 +48,9 @@ class UserViewModel(private val repository: UserRepositoryImpl) : ViewModel() {
         repository.forgotActiveUser()
     }
 
+    fun getActiveUser(): LiveData<User> {
+        user = repository.getActiveUser()
+        return user
+    }
 
 }

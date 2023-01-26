@@ -38,7 +38,6 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
         super.onViewCreated(view, savedInstanceState)
         //Changed Text Input
         binding.editTextPhone.addTextChangedListener {
-            println("AAA")
             binding.passwordLayout.error = null
             binding.phoneLayout.error = null
         }
@@ -52,35 +51,37 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
 
             if (!remember) userViewModel.forgotActiveUser()
             if (phone != "") {
-                println(phone)
-                userViewModel.getUserByPhone(phone)!!
-                    .observe((activity as MainActivity?)!!, Observer {
-                        println(phone)
-                        if (it == null) {
-                            userViewModel.createUser(phone, password, remember)
-                        } else {
-                            binding.phoneLayout.error = getString(R.string.error_registration)
-                        }
-                    })
+                userViewModel.getUserByPhone(phone).observe(activity as MainActivity, Observer {
+                    if (it != null)
+                        binding.phoneLayout.error = getString(R.string.error_registration)
+                    else {
+                        userViewModel.createUser(phone, password, remember)
+                    }
+                })
             }
         }
+
         //Login -->
         binding.loginBtn.setOnClickListener {
             phone = binding.editTextPhone.text.toString()
             password = binding.editTextPassword.text.toString()
             remember = binding.rememberSw.isChecked
 
-            userViewModel.getUserByPhone(phone)!!.observe((activity as MainActivity?)!!, Observer {
-                if (it == null)
-                    binding.phoneLayout.error = getString(R.string.error_login)
-                else {
-                    if (it.password != password)
-                        binding.passwordLayout.error = getString(R.string.error_password)
-                    else {
-//                        userViewModel.goToNextFragment(this,FragmentUserCard.newInstance())
-                    }
-                }
-            })
+            if (!remember) userViewModel.forgotActiveUser()
+            if (phone == "") {
+                binding.phoneLayout.error = getString(R.string.error_login)
+            } else {
+                userViewModel.getUserByPhone(phone).observe(activity as MainActivity, Observer {
+                    if (it != null) {
+                        if (it.password != password)
+                            binding.passwordLayout.error = getString(R.string.error_password)
+                        else {
+
+                            userViewModel.goToNextFragment(this, StartFragment.newInstance())
+                        }
+                    } else binding.phoneLayout.error = getString(R.string.error_login)
+                })
+            }
         }
 
     }
