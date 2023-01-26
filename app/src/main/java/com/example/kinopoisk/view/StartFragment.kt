@@ -21,7 +21,7 @@ class StartFragment : Fragment(R.layout.start_fragment) {
         super.onViewCreated(view, savedInstanceState)
         userViewModel.getActiveUser().observe(activity as MainActivity, Observer {
             if (it != null){
-                userViewModel.goToNextFragmentWithLoad(this, LoginFragment.newInstance(), 3)
+                userViewModel.goToNextFragmentWithLoad(this, FilmListFragment.newInstance(), 3)
             }
             else {
                 userViewModel.goToNextFragmentWithLoad(this, LoginFragment.newInstance(), 3)

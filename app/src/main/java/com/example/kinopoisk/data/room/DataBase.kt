@@ -4,12 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.kinopoisk.data.model.Test.Film
 import com.example.kinopoisk.data.model.entity.User
 
 @Database(
     entities = [
-        User::class
-    ], version = 1
+        User::class,
+    ], version = 3
 )
 abstract class DataBase : RoomDatabase() {
     abstract fun getDaoUser(): DaoUser

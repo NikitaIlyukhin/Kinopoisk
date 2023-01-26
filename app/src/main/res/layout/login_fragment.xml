@@ -12,8 +12,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/login_app"
         android:background="@drawable/round_button"
+        android:text="@string/login_app"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="16sp"
@@ -72,15 +72,14 @@
             app:boxStrokeColor="@color/grey_text"
             app:boxStrokeWidth="0dp"
 
-            app:errorEnabled="true"
-
             app:boxStrokeWidthFocused="1dp"
+
+            app:errorEnabled="true"
             app:hintTextColor="@color/grey_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <com.google.android.material.textfield.TextInputEditText

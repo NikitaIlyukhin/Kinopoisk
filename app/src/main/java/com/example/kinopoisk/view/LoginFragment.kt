@@ -56,6 +56,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                         binding.phoneLayout.error = getString(R.string.error_registration)
                     else {
                         userViewModel.createUser(phone, password, remember)
+                        userViewModel.goToNextFragment(this, FilmListFragment.newInstance())
                     }
                 })
             }
@@ -76,8 +77,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                         if (it.password != password)
                             binding.passwordLayout.error = getString(R.string.error_password)
                         else {
-
-                            userViewModel.goToNextFragment(this, StartFragment.newInstance())
+                            userViewModel.goToNextFragment(this, FilmListFragment.newInstance())
                         }
                     } else binding.phoneLayout.error = getString(R.string.error_login)
                 })
