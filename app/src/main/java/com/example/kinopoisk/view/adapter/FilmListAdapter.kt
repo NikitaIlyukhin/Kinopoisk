@@ -12,8 +12,8 @@ class FilmListAdapter() : RecyclerView.Adapter<FilmListAdapter.ListViewHolder?>(
     private var filmList = emptyList<Film>()
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById(R.id.tvTitle)
-        val country: TextView = itemView.findViewById(R.id.tvCases)
+        val name: TextView = itemView.findViewById(R.id.name)
+        val country: TextView = itemView.findViewById(R.id.country)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -30,9 +30,8 @@ class FilmListAdapter() : RecyclerView.Adapter<FilmListAdapter.ListViewHolder?>(
     override fun getItemCount(): Int {
         return filmList.size
     }
-
     fun setData(films: List<Film>){
-        filmList = films
+        this.filmList = films
         notifyDataSetChanged()
     }
 }

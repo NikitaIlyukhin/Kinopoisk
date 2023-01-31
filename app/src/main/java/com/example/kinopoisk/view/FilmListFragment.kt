@@ -5,22 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kinopoisk.R
 import com.example.kinopoisk.data.model.Test.Film
 import com.example.kinopoisk.data.model.entity.User
 import com.example.kinopoisk.databinding.FilmListFragmentBinding
-import com.example.kinopoisk.view.adapter.FilmListAdapter
+import com.example.kinopoisk.view.adapter.FilmAdapter
+
 
 class FilmListFragment : Fragment(R.layout.film_list_fragment) {
 
     //    private val userViewModel by activityViewModels<UserViewModel>()
     private lateinit var binding: FilmListFragmentBinding
     private lateinit var activeUser: User
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: FilmListAdapter
+    private lateinit var adapter: FilmAdapter
 
     companion object {
         @JvmStatic
@@ -34,10 +34,11 @@ class FilmListFragment : Fragment(R.layout.film_list_fragment) {
     ): View? {
         binding = FilmListFragmentBinding.inflate(inflater)
         //List Orders->
-        adapter = FilmListAdapter()
-        recyclerView = binding.filmRecycler
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        adapter = FilmAdapter()
+        with(binding){
+            filmRecycler.layoutManager = GridLayoutManager(requireContext(),2)
+            filmRecycler.adapter = adapter
+        }
         //<-List Orders
         return binding.root
     }
@@ -48,10 +49,10 @@ class FilmListFragment : Fragment(R.layout.film_list_fragment) {
             Film("Миссия невыполнима", "США"),
             Film("Елки", "Россия"),
             Film("Паразиты", "Корея"),
-            Film("Миссия невыполнима", "США"),
-            Film("Елки", "Россия"),
-            Film("Паразиты", "Корея")
+            Film("Миссия невыполним", "США"),
+            Film("Елк", "Россия"),
+            Film("Паразит", "Корея")
         )
-        adapter.setData(list)
+        adapter.submitList(list)
     }
 }

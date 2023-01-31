@@ -24,4 +24,6 @@
     <string name="numberDefault">1</string>
     <string name="id">id</string>
     <string name="remember_me">Запомнить меня</string>
+    <string name="film_name">Название</string>
+    <string name="film_country">Страна</string>
 </resources>
