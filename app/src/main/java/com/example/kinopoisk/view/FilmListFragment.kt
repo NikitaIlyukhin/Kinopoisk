@@ -5,22 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.kinopoisk.R
-import com.example.kinopoisk.data.model.Test.Film
+import com.example.kinopoisk.data.model.rModel.Film
 import com.example.kinopoisk.data.model.entity.User
 import com.example.kinopoisk.databinding.FilmListFragmentBinding
 import com.example.kinopoisk.view.adapter.FilmAdapter
+import com.example.kinopoisk.viewModel.UserViewModel
 
 
 class FilmListFragment : Fragment(R.layout.film_list_fragment) {
 
-    //    private val userViewModel by activityViewModels<UserViewModel>()
+    private val userViewModel by activityViewModels<UserViewModel>()
     private lateinit var binding: FilmListFragmentBinding
     private lateinit var activeUser: User
     private lateinit var adapter: FilmAdapter
+    val list = ArrayList<Film>()
+//    private val filmViewModel by  activityViewModels<FilmViewModel>()
 
     companion object {
         @JvmStatic
@@ -28,15 +30,13 @@ class FilmListFragment : Fragment(R.layout.film_list_fragment) {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = FilmListFragmentBinding.inflate(inflater)
         //List Orders->
         adapter = FilmAdapter()
-        with(binding){
-            filmRecycler.layoutManager = GridLayoutManager(requireContext(),2)
+        with(binding) {
+            filmRecycler.layoutManager = GridLayoutManager(requireContext(), 2)
             filmRecycler.adapter = adapter
         }
         //<-List Orders
@@ -45,14 +45,11 @@ class FilmListFragment : Fragment(R.layout.film_list_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var list: List<Film> = listOf(
-            Film("Миссия невыполнима", "США"),
-            Film("Елки", "Россия"),
-            Film("Паразиты", "Корея"),
-            Film("Миссия невыполним", "США"),
-            Film("Елк", "Россия"),
-            Film("Паразит", "Корея")
-        )
-        adapter.submitList(list)
+        userViewModel.getFilms()
+        userViewModel.listFilm.observe(viewLifecycleOwner, { resp ->
+            resp.body()?.let {
+                adapter.submitList(it.films)
+            }
+        })
     }
 }

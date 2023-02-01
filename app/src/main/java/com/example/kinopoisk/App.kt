@@ -9,8 +9,8 @@ class App : Application() {
     companion object {
         lateinit var ctx: Context
         lateinit var dataBase: DataBase
-        val KINO_TOKEN = "ZQQ8GMN-TN54SGK-NB3MKEC-ZKB8V06"
-        val KINO_BASE_URL = "https://api.kinopoisk.dev/"
+        val KINO_TOKEN = "24d61c28-5812-49d1-9138-7a2fa2833aa2"
+        val KINO_BASE_URL = "https://kinopoiskapiunofficial.tech/api/v2.2/films/"
     }
 
     override fun onCreate() {

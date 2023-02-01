@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.kinopoisk.data.model.Test.Film
+import com.example.kinopoisk.data.model.rModel.Film
 import com.example.kinopoisk.databinding.FilmListItemBinding
 
 class FilmAdapter : ListAdapter<Film, FilmAdapter.ItemHolder>(ItemComparator()) {
     class ItemHolder(private val binding: FilmListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(film: Film) = with(binding) {
-            name.text = film.name
-            country.text = film.country
+            name.text = film.nameRu
+            country.text = film.nameEn
         }
 
         companion object {
