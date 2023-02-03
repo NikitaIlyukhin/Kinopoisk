@@ -6,14 +6,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kinopoisk.R
-import com.example.kinopoisk.data.model.Test.Film
+import com.example.kinopoisk.data.model.rModel.Film
 
-class FilmListAdapter() : RecyclerView.Adapter<FilmListAdapter.ListViewHolder?>() {
+
+class FilmListAdapter(val adapterOnClick: (Film) -> Unit) : RecyclerView.Adapter<FilmListAdapter.ListViewHolder>() {
     private var filmList = emptyList<Film>()
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name: TextView = itemView.findViewById(R.id.name)
         val country: TextView = itemView.findViewById(R.id.country)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
@@ -23,8 +25,9 @@ class FilmListAdapter() : RecyclerView.Adapter<FilmListAdapter.ListViewHolder?>(
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val currentItem = filmList[position]
-        holder.name.text = currentItem.name
-        holder.country.text = currentItem.country
+        holder.name.text = currentItem.nameRu
+        holder.country.text = currentItem.nameEn
+        adapterOnClick(filmList[position])
     }
 
     override fun getItemCount(): Int {

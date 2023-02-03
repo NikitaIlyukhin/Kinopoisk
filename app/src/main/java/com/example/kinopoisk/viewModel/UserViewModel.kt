@@ -7,18 +7,24 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kinopoisk.R
 import com.example.kinopoisk.data.model.entity.User
+import com.example.kinopoisk.data.model.rModel.Film
 import com.example.kinopoisk.data.model.rModel.FilmModel
-import com.example.kinopoisk.data.repository.UserRepository
 import com.example.kinopoisk.data.repository.UserRepositoryImpl
+import com.example.kinopoisk.data.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
-class UserViewModel(private val repository: UserRepositoryImpl = UserRepository()) : ViewModel() {
-    var user:LiveData<User> = MutableLiveData<User>()
+class UserViewModel(private val repository: UserRepository = UserRepositoryImpl()) : ViewModel() {
+    var user: LiveData<User> = MutableLiveData<User>()
     val listFilm: MutableLiveData<Response<FilmModel>> = MutableLiveData()
+
+    //    val film: MutableLiveData<Film> by lazy {
+//        MutableLiveData<Film>()
+//    }
+    val film: MutableLiveData<Film> = MutableLiveData()
 
     fun createUser(phone: String, password: String, activeFlg: Boolean) {
         repository.createUser(User(phone, password, activeFlg))
@@ -56,12 +62,15 @@ class UserViewModel(private val repository: UserRepositoryImpl = UserRepository(
         user = repository.getActiveUser()
         return user
     }
-    fun getFilms(){
-        viewModelScope.launch {
-            listFilm.value = repository.getAllFilms()
-        }
 
-        println(listFilm)
+    fun getFilms(page:Int=1) {
+        viewModelScope.launch {
+            listFilm.value = repository.getAllFilms(page)
+        }
+    }
+
+    fun setFilms(currentFilm: Film) {
+        film.value = currentFilm
     }
 
 }

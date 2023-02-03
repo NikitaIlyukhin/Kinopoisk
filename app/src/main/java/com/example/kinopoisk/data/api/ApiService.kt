@@ -7,10 +7,13 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
-    @Headers(
-        value = ["X-API-KEY: 24d61c28-5812-49d1-9138-7a2fa2833aa2",
-            "Content-Type: application/json"]
-    )
-    @GET("top?type=TOP_100_POPULAR_FILMS&page=1")
-    suspend fun getMovies(): Response<FilmModel>
+    //    @Headers(
+//        value = ["X-API-KEY: 24d61c28-5812-49d1-9138-7a2fa2833aa2",
+//            "Content-Type: application/json"]
+//    )
+    @GET("top")
+    suspend fun getMovies(
+        @Query("page") page: Int,
+        @Query("type") type: String = "TOP_100_POPULAR_FILMS"
+    ): Response<FilmModel>
 }
