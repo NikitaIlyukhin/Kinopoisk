@@ -28,4 +28,8 @@
     <string name="film_country">Страна</string>
     <string name="next">Далее</string>
     <string name="page">Страница</string>
+    <string name="time">Время</string>
+    <string name="description">Описание</string>
+    <string name="country">страны</string>
+    <string name="owner">режисер</string>
 </resources>

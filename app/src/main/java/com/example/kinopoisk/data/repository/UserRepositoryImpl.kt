@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.kinopoisk.App
 import com.example.kinopoisk.data.api.AppModule
 import com.example.kinopoisk.data.model.entity.User
+import com.example.kinopoisk.data.model.rModel.FilmExtend
 import com.example.kinopoisk.data.model.rModel.FilmModel
 import com.example.kinopoisk.data.room.DataBase
 import kotlinx.coroutines.*
@@ -33,7 +34,12 @@ class UserRepositoryImpl : UserRepository {
     override fun getActiveUser(): LiveData<User> {
         return dB.getDaoUser().getActiveUser()
     }
+
     override suspend fun getAllFilms(page:Int): Response<FilmModel> {
         return AppModule.api.getMovies(page)
+    }
+
+    override suspend fun getFilm(id:Long): Response<FilmExtend> {
+        return AppModule.api.getFilm(id)
     }
 }

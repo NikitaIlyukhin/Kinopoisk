@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -46,8 +48,8 @@ class FilmListFragment : Fragment(R.layout.film_list_fragment) {
     }
 
     fun doClick(film: Film) {
-        println(film.nameRu)
         userViewModel.setFilms(film)
+//        userViewModel.getFilm(film.filmId)
         userViewModel.goToNextFragment(this, FilmFragment.newInstance())
     }
 
@@ -56,8 +58,14 @@ class FilmListFragment : Fragment(R.layout.film_list_fragment) {
         setFilms(page)
         binding.page.text = page.toString()
 
-        binding.backBtn.isEnabled = page == 1
-        binding.backBtn.isActivated = page == 1
+
+        binding.backBtn.isVisible = page != 1
+        binding.nextBtn.isVisible = page < 5
+        binding.page.addTextChangedListener {
+            binding.backBtn.isVisible = page != 1
+            binding.nextBtn.isVisible = page < 5
+        }
+
         binding.backBtn.setOnClickListener {
             println("Назад")
             page--

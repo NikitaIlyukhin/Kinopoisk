@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.kinopoisk.R
 import com.example.kinopoisk.data.model.entity.User
 import com.example.kinopoisk.data.model.rModel.Film
+import com.example.kinopoisk.data.model.rModel.FilmExtend
 import com.example.kinopoisk.data.model.rModel.FilmModel
 import com.example.kinopoisk.data.repository.UserRepositoryImpl
 import com.example.kinopoisk.data.repository.UserRepository
@@ -20,10 +21,7 @@ import retrofit2.Response
 class UserViewModel(private val repository: UserRepository = UserRepositoryImpl()) : ViewModel() {
     var user: LiveData<User> = MutableLiveData<User>()
     val listFilm: MutableLiveData<Response<FilmModel>> = MutableLiveData()
-
-    //    val film: MutableLiveData<Film> by lazy {
-//        MutableLiveData<Film>()
-//    }
+    val filmExtend: MutableLiveData<Response<FilmExtend>> = MutableLiveData()
     val film: MutableLiveData<Film> = MutableLiveData()
 
     fun createUser(phone: String, password: String, activeFlg: Boolean) {
@@ -72,5 +70,12 @@ class UserViewModel(private val repository: UserRepository = UserRepositoryImpl(
     fun setFilms(currentFilm: Film) {
         film.value = currentFilm
     }
+
+    fun getFilm(id:Long){
+        viewModelScope.launch {
+            filmExtend.value = repository.getFilm(id)
+        }
+    }
+
 
 }

@@ -26,7 +26,7 @@ class FilmListAdapter(val adapterOnClick: (Film) -> Unit) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val currentItem = filmList[position]
         holder.name.text = currentItem.nameRu
-        holder.country.text = currentItem.nameEn
+        holder.country.text = currentItem.nameEn.toString()
         adapterOnClick(filmList[position])
     }
 
