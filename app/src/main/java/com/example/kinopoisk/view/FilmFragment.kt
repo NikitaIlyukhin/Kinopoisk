@@ -81,22 +81,24 @@ class FilmFragment : Fragment(R.layout.film_fragment) {
         return res
     }
     fun setRating(rate:Double){
-        var rate100 = round((rate*10)).toInt()
-        for (i in 0 .. rate100 step 10){
-            when (i){
-                10 ->binding.star1.setImageResource(R.drawable.ic_baseline_star_half_24)
-                20->binding.star1.setImageResource(R.drawable.ic_baseline_star_24)
-                30 ->binding.star2.setImageResource(R.drawable.ic_baseline_star_half_24)
-                40->binding.star2.setImageResource(R.drawable.ic_baseline_star_24)
-                50 ->binding.star3.setImageResource(R.drawable.ic_baseline_star_half_24)
-                60->binding.star3.setImageResource(R.drawable.ic_baseline_star_24)
-                70 ->binding.star4.setImageResource(R.drawable.ic_baseline_star_half_24)
-                80->binding.star4.setImageResource(R.drawable.ic_baseline_star_24)
-                90->binding.star5.setImageResource(R.drawable.ic_baseline_star_24)
-            }
-        }
-        when(rate100){
-            in 81..91 -> binding.star5.setImageResource(R.drawable.ic_baseline_star_half_24)
-        }
+//        var rate100 = round((rate*10)).toInt()
+//        for (i in 0 .. rate100 step 10){
+//            when (i){
+//                10 ->binding.star1.setImageResource(R.drawable.ic_baseline_star_half_24)
+//                20->binding.star1.setImageResource(R.drawable.ic_baseline_star_24)
+//                30 ->binding.star2.setImageResource(R.drawable.ic_baseline_star_half_24)
+//                40->binding.star2.setImageResource(R.drawable.ic_baseline_star_24)
+//                50 ->binding.star3.setImageResource(R.drawable.ic_baseline_star_half_24)
+//                60->binding.star3.setImageResource(R.drawable.ic_baseline_star_24)
+//                70 ->binding.star4.setImageResource(R.drawable.ic_baseline_star_half_24)
+//                80->binding.star4.setImageResource(R.drawable.ic_baseline_star_24)
+//                90->binding.star5.setImageResource(R.drawable.ic_baseline_star_24)
+//            }
+//        }
+//        when(rate100){
+//            in 81..91 -> binding.star5.setImageResource(R.drawable.ic_baseline_star_half_24)
+//        }
+        println("$rate ${rate.toFloat()} ${rate.toFloat() / 2}")
+        binding.ratingBar.rating = rate.toFloat() / 2
     }
 }
