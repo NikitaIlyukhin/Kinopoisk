@@ -1,10 +1,7 @@
 package com.example.kinopoisk.viewModel
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.kinopoisk.R
 import com.example.kinopoisk.data.model.entity.User
 import com.example.kinopoisk.data.model.rModel.Film
@@ -15,14 +12,16 @@ import com.example.kinopoisk.data.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class UserViewModel(private val repository: UserRepository = UserRepositoryImpl()) : ViewModel() {
     var user: LiveData<User> = MutableLiveData<User>()
-    val listFilm: MutableLiveData<Response<FilmModel>> = MutableLiveData()
     val filmExtend: MutableLiveData<Response<FilmExtend>> = MutableLiveData()
     val film: MutableLiveData<Film> = MutableLiveData()
+    val list: MutableLiveData<FilmModel> = MutableLiveData()
 
     fun createUser(phone: String, password: String, activeFlg: Boolean) {
         repository.createUser(User(phone, password, activeFlg))
@@ -62,9 +61,15 @@ class UserViewModel(private val repository: UserRepository = UserRepositoryImpl(
     }
 
     fun getFilms(page:Int=1) {
-        viewModelScope.launch {
-            listFilm.value = repository.getAllFilms(page)
-        }
+            viewModelScope.launch {
+                try {
+                    list.value = repository.getAllFilms(page).body()
+                    repository.saveListFilm(list.value!!.films, page)
+                }
+                catch (e:Exception){
+                    list.value = FilmModel(repository.getFilmByBD(page).first(),page)
+                }
+            }
     }
 
     fun setFilms(currentFilm: Film) {
@@ -73,9 +78,16 @@ class UserViewModel(private val repository: UserRepository = UserRepositoryImpl(
 
     fun getFilm(id:Long){
         viewModelScope.launch {
-            filmExtend.value = repository.getFilm(id)
+            try {
+                filmExtend.value = repository.getFilm(id)
+            }
+            catch (e:Exception){
+                println("getFilm: $e")
+            }
+
         }
     }
+
 
 
 }

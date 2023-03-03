@@ -82,10 +82,8 @@ class FilmListFragment : Fragment(R.layout.film_list_fragment) {
 
     fun setFilms(page: Int) {
         userViewModel.getFilms(page)
-        userViewModel.listFilm.observe(viewLifecycleOwner) { resp ->
-            resp.body()?.let {
-                adapter.submitList(it.films)
-            }
+        userViewModel.list.observe(viewLifecycleOwner) {
+            adapter.submitList(it.films)
         }
     }
 
